@@ -49,6 +49,16 @@ func GetPeopleEndpoint(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(people)
 }
 
+func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Add("Content-Type", "application/json")
+	var person Person
+	json.NewDecoder(request.Body).Decode(&person)
+	collection := client.Database(DB_NAME).Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+	result, _ := collection.InsertOne(ctx, person)
+	json.NewEncoder(response).Encode(result)
+}
+
 func main() {
 	fmt.Println("Starting the application")
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -63,6 +73,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
+	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
 
 	http.ListenAndServe(":12345", router)
 }
