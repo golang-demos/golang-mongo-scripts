@@ -59,6 +59,23 @@ func CreatePersonEndpoint(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(result)
 }
 
+func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Add("Content-Type", "application/json")
+	params := mux.Vars(request)
+	id, _ := primitive.ObjectIDFromHex(params["id"])
+	var person Person
+	collection := client.Database(DB_NAME).Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	err := collection.FindOne(ctx, Person{ID: id}).Decode(&person)
+	if err != nil {
+		response.WriteHeader(http.StatusInternalServerError)
+		response.Write([]byte(`{"message": "` + err.Error() + `"}`))
+		return
+	}
+	json.NewEncoder(response).Encode(person)
+}
+
 func main() {
 	fmt.Println("Starting the application")
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -74,6 +91,7 @@ func main() {
 
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
+	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
 
 	http.ListenAndServe(":12345", router)
 }
