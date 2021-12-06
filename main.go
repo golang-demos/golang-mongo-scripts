@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -76,6 +77,24 @@ func GetPersonEndpoint(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(person)
 }
 
+func DeletePersonEndpoint(response http.ResponseWriter, request *http.Request) {
+	response.Header().Add("Content-Type", "application/json")
+	params := mux.Vars(request)
+	id, _ := primitive.ObjectIDFromHex(params["id"])
+
+	collection := client.Database(DB_NAME).Collection("people")
+	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+
+	resp, err := collection.DeleteOne(ctx, Person{ID: id})
+	if err != nil {
+		response.WriteHeader(http.StatusNotFound)
+		response.Write([]byte(`{"message": "` + err.Error() + `"}`))
+		return
+	}
+	message := strconv.Itoa(int(resp.DeletedCount)) + " records deleted"
+	response.Write([]byte(`{"message": "` + message + `"}`))
+}
+
 func main() {
 	fmt.Println("Starting the application")
 	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
@@ -92,6 +111,7 @@ func main() {
 	router.HandleFunc("/people", GetPeopleEndpoint).Methods("GET")
 	router.HandleFunc("/person", CreatePersonEndpoint).Methods("POST")
 	router.HandleFunc("/person/{id}", GetPersonEndpoint).Methods("GET")
+	router.HandleFunc("/person/{id}", DeletePersonEndpoint).Methods("DELETE")
 
 	http.ListenAndServe(":12345", router)
 }
