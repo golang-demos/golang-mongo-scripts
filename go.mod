@@ -1,4 +1,4 @@
-module github.com/golang-demos/mongo-demo
+module github.com/golang-demos/golang-mongo-scripts
 
 go 1.17
 
