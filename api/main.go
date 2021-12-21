@@ -3,11 +3,13 @@ package main
 import (
 	"log"
 	"os"
+	"time"
 
+	"github.com/gofiber/fiber"
 	"github.com/golang-demos/golang-mongo-scripts/database"
 	"github.com/golang-demos/golang-mongo-scripts/scripts"
+	"github.com/golang-demos/golang-mongo-scripts/seeder"
 
-	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 )
 
@@ -33,6 +35,11 @@ func main() {
 
 	database.ConnectDB()
 	defer database.DisconnectDB()
+
+	seeder.TruncateDatabase()
+	seeder.SeedDatabase()
+
+	time.Sleep(2 * time.Second)
 
 	app := fiber.New()
 
