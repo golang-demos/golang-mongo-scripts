@@ -18,11 +18,18 @@ func TruncateDatabase() bool {
 	return true
 }
 
-func SeedDatabase() bool {
+func SeedDatabase(doTruncate bool) bool {
 	faker.Name()
 
 	NumberOfProjects := 10
-	NumberOfEmployes := 50
+	NumberOfEmployes := 200
+
+	dbEmployesCount, _ := database.Db.Collection("employes").CountDocuments(context.Background(), bson.D{{}})
+	log.Print(dbEmployesCount, " Employes already exists")
+	if dbEmployesCount > int64(NumberOfEmployes) && (!doTruncate) {
+		return false
+	}
+	TruncateDatabase()
 
 	var ProjectMappings []primitive.ObjectID
 	for i := 0; i < NumberOfProjects; i++ {
@@ -41,8 +48,6 @@ func SeedDatabase() bool {
 		}
 		ProjectMappings = append(ProjectMappings, result.InsertedID.(primitive.ObjectID))
 	}
-
-	log.Print(ProjectMappings)
 
 	for i := 0; i < NumberOfEmployes; i++ {
 		ctcSeeder := rand.Intn(20)
