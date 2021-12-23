@@ -20,3 +20,9 @@ type Projects struct {
 	ID   primitive.ObjectID `json:"_id" bson:"_id"`
 	Name string             `json:"name" bson:"name"`
 }
+
+type DemoScript struct {
+	Name        string
+	Description string
+	Handler     func()
+}
