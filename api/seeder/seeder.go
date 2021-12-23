@@ -53,6 +53,7 @@ func SeedDatabase(doTruncate bool) bool {
 		ctcSeeder := rand.Intn(20)
 		_, err := database.Db.Collection("employes").InsertOne(context.Background(), bson.M{
 			"name": faker.Name(),
+			"age":  ctcSeeder + 20,
 			"designation": []string{
 				"Project Manager",
 				"Software Architect",
