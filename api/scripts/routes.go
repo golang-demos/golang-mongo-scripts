@@ -1,13 +1,16 @@
 package scripts
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"github.com/golang-demos/golang-mongo-scripts/models"
 )
 
-func RegisterRoutes(app *fiber.App) {
+var DemoScripts []models.DemoScript
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello World")
-	})
+func RegisterScripts() []*models.DemoScript {
+	demoScripts := []*models.DemoScript{
+		DemoScript_Insert_Demo(),
+		DemoScript_FindOne_Demo(),
+	}
 
+	return demoScripts
 }
