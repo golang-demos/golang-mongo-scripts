@@ -1,4 +1,5 @@
 ## Golang + Mongo - Demo Scripts
+The main function triggers seeder logic which inserts dummy data into the database.
 
 ## Run
 
