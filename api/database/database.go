@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -29,4 +30,9 @@ func DisconnectDB() {
 		panic(err)
 	}
 	log.Println("Database disconnected")
+}
+
+func GetCountForFilter(collectionName string, filter bson.D) int {
+	count, _ := Db.Collection(collectionName).CountDocuments(context.Background(), filter)
+	return int(count)
 }
