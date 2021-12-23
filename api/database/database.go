@@ -22,6 +22,9 @@ func ConnectDB() {
 }
 
 func DisconnectDB() {
+	if Client == nil {
+		return
+	}
 	if err := Client.Disconnect(context.Background()); err != nil {
 		panic(err)
 	}
