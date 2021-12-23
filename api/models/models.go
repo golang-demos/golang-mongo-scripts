@@ -7,6 +7,7 @@ import (
 type Employes struct {
 	ID          primitive.ObjectID  `json:"_id" bson:"_id"`
 	Name        string              `json:"name" bson:"name"`
+	Age         int16               `json:"age" bson:"age"`
 	Designation string              `json:"designation" bson:"designation"`
 	ProjectID   primitive.ObjectID  `json:"project_id" bson:"project_id"`
 	Ctc         float64             `json:"ctc" bson:"ctc"`
