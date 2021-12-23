@@ -16,7 +16,7 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			var filter bson.D
 			var recordsCount int
 
-			// Count all employes
+			// Count all employes [No-Condition]
 			filter = bson.D{{}}
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count All Employes [No-Condition] : " + strconv.Itoa(recordsCount) + " records found")
@@ -39,6 +39,39 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			}}
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count Employes with condition [experience > 60] : " + strconv.Itoa(recordsCount) + " records found")
+
+			// Count employes with [age >= 34]
+			filter = bson.D{{
+				Key: "age",
+				Value: bson.D{{
+					Key:   "$gte",
+					Value: 34,
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count Employes with condition [age >= 34] : " + strconv.Itoa(recordsCount) + " records found")
+
+			// Count employes with [shiftid < 3]
+			filter = bson.D{{
+				Key: "shiftid",
+				Value: bson.D{{
+					Key:   "$lt",
+					Value: 3,
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count Employes with condition [shiftid < 3] : " + strconv.Itoa(recordsCount) + " records found")
+
+			// Count employes with [ctc <= 1,150,000]
+			filter = bson.D{{
+				Key: "ctc",
+				Value: bson.D{{
+					Key:   "$lte",
+					Value: 1150000,
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count Employes with condition [ctc <= 1,150,000] : " + strconv.Itoa(recordsCount) + " records found")
 
 		},
 	}
