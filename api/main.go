@@ -47,21 +47,21 @@ func main() {
 	for {
 		index = 0
 		for _, dScript := range demoScripts {
-			log.Printf("[%d] %s", index+1, dScript.Name)
+			fmt.Printf("\n[%d] %s", index+1, dScript.Name)
 			index++
 		}
-		log.Printf("[%d] %s", 0, "Exit")
-
+		fmt.Printf("\n[%d] %s", 0, "Exit")
+		fmt.Print("\n\nOption : ")
 		fmt.Scan(&input)
 
 		inputIndex, _ := strconv.Atoi(input)
 		if inputIndex == 0 {
-			log.Print("Exiting...")
+			fmt.Print("\nExiting...")
 			break
 		}
 
 		if len(demoScripts) < inputIndex {
-			log.Print("Wrong Input. Try again")
+			fmt.Print("\nWrong Input. Try again")
 			continue
 		}
 	}
