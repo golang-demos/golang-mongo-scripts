@@ -73,6 +73,35 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count Employes with condition [ctc <= 1,150,000] : " + strconv.Itoa(recordsCount) + " records found")
 
+			// Count employes with designation matching to any from the list ["Project Manager", "Software Architect", "Senior Software Developer"]
+			filter = bson.D{{
+				Key: "designation",
+				Value: bson.D{{
+					Key: "$in",
+					Value: []string{
+						"Project Manager",
+						"Software Architect",
+						"Senior Software Developer",
+					},
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count employes with designation matching to any from the list [\"Project Manager\", \"Software Architect\", \"Senior Software Developer\"] : " + strconv.Itoa(recordsCount) + " records found")
+
+			// Count employes with designation NOT matching to any from the list ["Project Manager", "Software Architect", "Senior Software Developer"]
+			filter = bson.D{{
+				Key: "designation",
+				Value: bson.D{{
+					Key: "$nin", // NOT IN
+					Value: []string{
+						"Software Architect",
+						"Lead Software Developer",
+					},
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count employes with designation NOT matching to any from the list [\"Software Architect\", \"Lead Software Developer\"] : " + strconv.Itoa(recordsCount) + " records found")
+
 		},
 	}
 }
