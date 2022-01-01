@@ -16,6 +16,8 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			var filter bson.D
 			var recordsCount int
 
+			PrintTaskTitle("api/scripts/02_Basic_Conditions.go")
+
 			// Count all employes [No-Condition]
 			filter = bson.D{{}}
 			recordsCount = database.GetCountForFilter("employes", filter)
