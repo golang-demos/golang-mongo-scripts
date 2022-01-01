@@ -29,6 +29,17 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count Employes with condition [shiftid = 2] : " + strconv.Itoa(recordsCount) + " records found")
 
+			// Count employes with [shiftid != 3]
+			filter = bson.D{{
+				Key: "shiftid",
+				Value: bson.D{{
+					Key:   "$ne",
+					Value: 3,
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count Employes with condition [shiftid != 3] : " + strconv.Itoa(recordsCount) + " records found")
+
 			// Count employes with [experience > 60]
 			filter = bson.D{{
 				Key: "experience",
@@ -101,6 +112,24 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			}}
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count employes with a designation NOT from [\"Software Architect\", \"Lead Software Developer\"] : " + strconv.Itoa(recordsCount) + " records found")
+
+			// Logical Conditions
+			// Count employes with a designation as "Project Manager" and (CTC > 1,200,000)
+			filter = bson.D{{
+				Key: "$and",
+				Value: []bson.D{
+					{{
+						Key:   "designation",
+						Value: "Software Architect",
+					}},
+					{{
+						Key:   "$gt",
+						Value: 1200000,
+					}},
+				},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count employes with a designation as \"Project Manager\" and (CTC > 1,200,000) : " + strconv.Itoa(recordsCount) + " records found")
 
 		},
 	}
