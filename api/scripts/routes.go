@@ -14,6 +14,7 @@ func RegisterScripts() []*models.DemoScript {
 		DemoScript_Insert_Demo(),
 		DemoScript_Conditions_Demo(),
 		Logical_Conditions_Demo(),
+		Element_Query_Demo(),
 	}
 
 	return demoScripts
