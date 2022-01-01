@@ -22,3 +22,7 @@ func RegisterScripts() []*models.DemoScript {
 func PrintTaskNote(note string) {
 	fmt.Println(chalk.Green(), "+", note, chalk.Reset())
 }
+
+func PrintTaskTitle(note string) {
+	fmt.Println(chalk.YellowLight().String()+"[-] "+note, chalk.Reset())
+}
