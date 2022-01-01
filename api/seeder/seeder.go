@@ -60,12 +60,14 @@ func SeedDatabase(doTruncate bool) bool {
 				"Senior Software Developer",
 				"Lead Software Developer",
 			}[rand.Intn(4)],
-			"project_id": ProjectMappings[rand.Intn(NumberOfProjects)],
-			"ctc":        (16 + ctcSeeder) * 50000,
-			"experience": (24 + (ctcSeeder * 6)),
-			"isverified": [2]bool{true, false}[rand.Intn(2)],
-			"joindate":   primitive.Timestamp{T: uint32(time.Now().AddDate(0, 0, (-1 * (60 + (10 * rand.Intn(30))))).Unix())},
-			"shiftid":    rand.Intn(4) + 1,
+			"project_id":             ProjectMappings[rand.Intn(NumberOfProjects)],
+			"ctc":                    (16 + ctcSeeder) * 50000,
+			"experience":             (24 + (ctcSeeder * 6)),
+			"isverified":             [2]bool{true, false}[rand.Intn(2)],
+			"joindate":               primitive.Timestamp{T: uint32(time.Now().AddDate(0, 0, (-1 * (60 + (10 * rand.Intn(30))))).Unix())},
+			"shiftid":                rand.Intn(4) + 1,
+			"cafeteria_credit":       3000 + (rand.Intn(4) * 100),
+			"cafeteria_credit_spent": 0,
 		})
 		if err != nil {
 			log.Print(err)
