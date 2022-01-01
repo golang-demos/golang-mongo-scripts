@@ -58,6 +58,20 @@ func Logical_Conditions_Demo() *models.DemoScript {
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count employes with ctc > 1,400,000 OR is verified : " + strconv.Itoa(recordsCount) + " records found")
 
+			// Count employes with experience not less than 4 years
+			filter = bson.D{{
+				Key: "experience",
+				Value: bson.D{{
+					Key: "$not",
+					Value: bson.D{{
+						Key:   "$lt",
+						Value: 48,
+					}},
+				}},
+			}}
+			recordsCount = database.GetCountForFilter("employes", filter)
+			PrintTaskNote("Count employes with experience not less than 4 years : " + strconv.Itoa(recordsCount) + " records found")
+
 		},
 	}
 }
