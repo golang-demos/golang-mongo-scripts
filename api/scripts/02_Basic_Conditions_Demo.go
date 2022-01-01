@@ -112,25 +112,6 @@ func DemoScript_Conditions_Demo() *models.DemoScript {
 			}}
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count employes with a designation NOT from [\"Software Architect\", \"Lead Software Developer\"] : " + strconv.Itoa(recordsCount) + " records found")
-
-			// Logical Conditions
-			// Count employes with a designation as "Project Manager" and (CTC > 1,200,000)
-			filter = bson.D{{
-				Key: "$and",
-				Value: []bson.D{
-					{{
-						Key:   "designation",
-						Value: "Software Architect",
-					}},
-					{{
-						Key:   "$gt",
-						Value: 1200000,
-					}},
-				},
-			}}
-			recordsCount = database.GetCountForFilter("employes", filter)
-			PrintTaskNote("Count employes with a designation as \"Project Manager\" and (CTC > 1,200,000) : " + strconv.Itoa(recordsCount) + " records found")
-
 		},
 	}
 }
