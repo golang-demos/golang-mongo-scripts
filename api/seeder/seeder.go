@@ -26,7 +26,7 @@ func SeedDatabase(doTruncate bool) bool {
 
 	dbEmployesCount, _ := database.Db.Collection("employes").CountDocuments(context.Background(), bson.D{{}})
 	log.Print(dbEmployesCount, " Employes already exists")
-	if dbEmployesCount > int64(NumberOfEmployes) && (!doTruncate) {
+	if dbEmployesCount >= int64(NumberOfEmployes) && (!doTruncate) {
 		return false
 	}
 	TruncateDatabase()
