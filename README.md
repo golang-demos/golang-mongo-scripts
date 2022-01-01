@@ -12,3 +12,8 @@ docker-compose -f docker-compose.dev.yml up
 ```
 docker-compose -f docker-compose.yml up
 ```
+
+### Mongodb CLI access
+```
+mongo --username mongoadmin --password secret
+```
