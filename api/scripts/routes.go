@@ -13,6 +13,7 @@ func RegisterScripts() []*models.DemoScript {
 	demoScripts := []*models.DemoScript{
 		DemoScript_Insert_Demo(),
 		DemoScript_Conditions_Demo(),
+		Logical_Conditions_Demo(),
 	}
 
 	return demoScripts
