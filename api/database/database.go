@@ -36,3 +36,8 @@ func GetCountForFilter(collectionName string, filter bson.D) int {
 	count, _ := Db.Collection(collectionName).CountDocuments(context.Background(), filter)
 	return int(count)
 }
+
+func GetCountForFilterOptions(collectionName string, filter bson.D, opts *options.CountOptions) int {
+	count, _ := Db.Collection(collectionName).CountDocuments(context.Background(), filter, opts)
+	return int(count)
+}
