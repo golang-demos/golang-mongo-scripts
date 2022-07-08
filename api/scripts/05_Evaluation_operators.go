@@ -33,7 +33,6 @@ func Evaluation_Query_Demo() *models.DemoScript {
 			}}
 			recordsCount = database.GetCountForFilter("employes", filter)
 			PrintTaskNote("Count employes with " + chalk.BlueLight().String() + "[cafeteria_credit == cafeteria_credit_spent]" + chalk.Reset() + " : " + strconv.Itoa(recordsCount) + " records found")
-
 		},
 	}
 }
